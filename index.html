@@ -34,28 +34,35 @@
 
 <!-- Statistik -->
 <div class="bg-white p-4 rounded shadow">
-    <h2 class="text-lg font-semibold mb-2 text-center">PEMASUKAN DAN PENGELUARAN</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div class="bg-green-100 p-4 rounded flex flex-col items-center sm:flex-row sm:justify-between">
-        <div class="text-center sm:text-left">
-          <h3 class="text-green-700 text-sm sm:text-base font-bold">TOTAL PEMASUKAN</h3>
-          <p id="totalIncome" class="text-xl font-bold">Rp 0</p>
-        </div>
-        <button id="editIncomeBtn" class="bg-yellow-500 text-white py-1 px-3 rounded mt-2 sm:mt-0">Edit</button>
+  <h2 class="text-lg font-semibold mb-2 text-center">PEMASUKAN DAN PENGELUARAN</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <!-- Total Pemasukan -->
+    <div class="bg-green-100 p-4 rounded flex flex-col items-center sm:flex-row sm:justify-between">
+      <div>
+        <h3 class="text-green-700 text-sm sm:text-base font-bold">TOTAL PEMASUKAN</h3>
+        <p id="totalIncome" class="text-xl font-bold">Rp 0</p>
       </div>
-      <div class="bg-red-100 p-4 rounded flex flex-col items-center sm:flex-row sm:justify-between">
-        <div class="text-center sm:text-left">
-          <h3 class="text-red-700 text-sm sm:text-base font-bold">TOTAL PENGELUARAN</h3>
-          <p id="totalExpense" class="text-xl font-bold">Rp 0</p>
-        </div>
-        <button id="editExpenseBtn" class="bg-yellow-500 text-white py-1 px-3 rounded mt-2 sm:mt-0">Edit</button>
+      <button id="editIncomeBtn" class="bg-yellow-500 text-white py-1 px-3 rounded mt-2 sm:mt-0">Edit</button>
+    </div>
+
+    <!-- Total Pengeluaran -->
+    <div class="bg-red-100 p-4 rounded flex flex-col items-center sm:flex-row sm:justify-between">
+      <div>
+        <h3 class="text-red-700 text-sm sm:text-base font-bold">TOTAL PENGELUARAN</h3>
+        <p id="totalExpense" class="text-xl font-bold">Rp 0</p>
       </div>
-      <div class="bg-blue-100 p-4 rounded flex flex-col items-center sm:flex-row sm:justify-between">
+      <button id="editExpenseBtn" class="bg-yellow-500 text-white py-1 px-3 rounded mt-2 sm:mt-0">Edit</button>
+    </div>
+
+    <!-- Sisa Duit -->
+    <div class="bg-blue-100 p-4 rounded flex flex-col items-center sm:flex-row sm:justify-between">
+      <div>
         <h3 class="text-blue-700 text-sm sm:text-base font-bold">SISA DUIT 😭</h3>
         <p id="totalSavings" class="text-xl font-bold">Rp 0</p>
       </div>
     </div>
   </div>
+</div>
   
     <!-- Tombol Logout -->
     <div class="flex justify-center mt-4">
