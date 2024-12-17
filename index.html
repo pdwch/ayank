@@ -229,39 +229,43 @@
     return;
   }
 
-  // Tentukan ID berdasarkan tipe transaksi
-  const transactionId = type === "income" ? "ID_PEMASUKAN" : "ID_PENGELUARAN";
-  const transactionRef = ref(db, `transactions/${transactionId}`);
+  // Buat ID transaksi unik menggunakan push
+  const transactionRef = ref(db, `transactions`);
+  const newTransactionRef = push(transactionRef);
 
   try {
-    // Ambil data lama dari Firebase
-    const snapshot = await get(transactionRef);
-    const currentAmount = snapshot.exists() ? snapshot.val().amount : 0;
-
-    // Tambahkan nominal baru ke jumlah lama
-    const updatedAmount = currentAmount + amount;
-
-    // Perbarui data di Firebase
-    await set(transactionRef, {
-      amount: updatedAmount,
+    // Tambahkan data baru ke Firebase
+    await set(newTransactionRef, {
+      amount,
       type,
       timestamp: Date.now(),
     });
 
     showPopup(`Ayank menambah ${type === "income" ? "Pemasukan 🥰" : "Pengeluaran 😭"}`);
-    updateTotalSavings();
     form.reset();
   } catch (error) {
     console.error("Error adding transaction:", error);
   }
-
-
-  // Update total savings
-  updateTotalSavings();
-
-  // Clear form
-  form.reset();
 });
+
+// Dengarkan pembaruan dari Firebase
+onValue(ref(db, "transactions"), (snapshot) => {
+  totalIncome = 0;
+  totalExpense = 0;
+
+  snapshot.forEach((childSnapshot) => {
+    const data = childSnapshot.val();
+    if (data.type === "income") {
+      totalIncome += data.amount;
+    } else if (data.type === "expense") {
+      totalExpense += data.amount;
+    }
+  });
+
+  updateTotalSavings();
+  updateStats();
+});
+
 
 // Listen to Firebase updates
 onValue(ref(db, "transactions/"), (snapshot) => {
