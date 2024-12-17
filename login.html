@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hi Ayank</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-100 to-blue-300 flex justify-center items-center min-h-screen text-gray-800 pb-16">
+  <!-- Login Container -->
+  <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm transform transition duration-500 hover:scale-105">
+    <h1 class="text-3xl font-extrabold text-center text-blue-500 mb-6">😘😘😘</h1>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-5">
+      <!-- Username Input -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="username" placeholder="Masukkan username"
+          class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+          required>
+      </div>
+
+      <!-- Password Input -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" placeholder="Masukkan password"
+          class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+          required>
+      </div>
+
+      <!-- Error Message -->
+      <p id="errorMessage" class="text-red-500 text-sm text-center opacity-0 transition duration-300">
+        salah sayang username atau passwordnya 😭
+      </p>
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition duration-300">
+        Login
+      </button>
+    </form>
+  </div>
+  <footer class="footer footer-center fixed bottom-0 left-0 w-full p-4 bg-gray-300 text-gray-800">
+    <div class="text-center">
+      <p>
+        made with ❤️ for ayank
+      </p>
+    </div>
+  </footer>
+  <!-- JavaScript -->
+  <script>
+    const form = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const errorMessage = document.getElementById("errorMessage");
+
+    // Username dan Password yang valid
+    const VALID_USERNAME = "syifacantik";
+    const VALID_PASSWORD = "rsyifacantik18";
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); // Hindari reload halaman
+
+      // Ambil nilai input
+      const enteredUsername = usernameInput.value.trim();
+      const enteredPassword = passwordInput.value;
+
+      // Tombol jadi loading
+      const submitButton = e.target.querySelector("button");
+      submitButton.innerText = "Bentar ya ayank...";
+      submitButton.disabled = true;
+
+      // Simulasi delay login (1 detik)
+      setTimeout(() => {
+        if (enteredUsername === VALID_USERNAME && enteredPassword === VALID_PASSWORD) {
+          // Simpan status login di localStorage
+          localStorage.setItem("isLoggedIn", "true");
+          window.location.href = "index.html";
+        } else {
+          // Tampilkan pesan error
+          errorMessage.classList.remove("opacity-0");
+          errorMessage.classList.add("opacity-100");
+        }
+
+        // Reset tombol
+        submitButton.innerText = "Login";
+        submitButton.disabled = false;
+      }, 5000);
+    });
+  </script>
+</body>
+
+</html>
