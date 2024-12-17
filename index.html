@@ -218,8 +218,7 @@
       }, 5000);
     }
 
- // Handle transaction form submission
-form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const amount = parseInt(amountInput.value);
@@ -234,18 +233,28 @@ form.addEventListener("submit", (e) => {
   const transactionId = type === "income" ? "ID_PEMASUKAN" : "ID_PENGELUARAN";
   const transactionRef = ref(db, `transactions/${transactionId}`);
 
-  // Set data di Firebase
-  set(transactionRef, {
-    amount,
-    type,
-    timestamp: Date.now(),
-  })
-    .then(() => {
-      showPopup(`Ayank menambah ${type === "income" ? "Pemasukan 🥰" : "Pengeluaran 😭"}`);
-    })
-    .catch((error) => {
-      console.error("Error adding transaction:", error);
+  try {
+    // Ambil data lama dari Firebase
+    const snapshot = await get(transactionRef);
+    const currentAmount = snapshot.exists() ? snapshot.val().amount : 0;
+
+    // Tambahkan nominal baru ke jumlah lama
+    const updatedAmount = currentAmount + amount;
+
+    // Perbarui data di Firebase
+    await set(transactionRef, {
+      amount: updatedAmount,
+      type,
+      timestamp: Date.now(),
     });
+
+    showPopup(`Ayank menambah ${type === "income" ? "Pemasukan 🥰" : "Pengeluaran 😭"}`);
+    updateTotalSavings();
+    form.reset();
+  } catch (error) {
+    console.error("Error adding transaction:", error);
+  }
+
 
   // Update total savings
   updateTotalSavings();
